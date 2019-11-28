@@ -4,9 +4,8 @@ type: docker
 name: default
 
 steps:
-  - name: Hello World
-    image: alpine:3.10
+  - name: Run pre-commit
+    image: flaudisio/pre-commit:latest
     commands:
-      - echo "Hello world!"
-      - cat /etc/os-release
-      - sleep 30
+      - pre-commit --version
+      - pre-commit run --all-files --verbose --color always
