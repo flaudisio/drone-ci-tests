@@ -1,0 +1,12 @@
+# MkDocs documentation
+site/
+
+# Temp files
+.DS_Store
+.#*
+
+# VSCode
+.vscode/**
+!.vscode/README.md
+!.vscode/extensions.json
+!.vscode/recommended-*.json

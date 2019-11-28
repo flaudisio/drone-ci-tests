@@ -4,9 +4,38 @@ type: docker
 name: default
 
 steps:
-  - name: Hello World
+  - name: Run pre-commit
+    image: flaudisio/pre-commit:latest
+    commands:
+      - pre-commit --version
+      - pre-commit run --all-files --verbose --color always
+
+  - name: Build site
+    image: flaudisio/mkdocs:1
+    commands:
+      - mkdocs --version
+      - mkdocs build --clean --strict
+
+  - name: Test site
     image: alpine:3.10
     commands:
-      - echo "Hello world!"
-      - cat /etc/os-release
-      - sleep 30
+      - test -f ./site/404.html
+      - test -f ./site/index.html
+      - test -f ./site/search/search_index.json
+      - grep -q 'Welcome to MkDocs' ./site/index.html
+
+  - name: Deploy site
+    image: flaudisio/awscli:1
+    environment:
+      AWS_ACCESS_KEY_ID:
+        from_secret: aws_access_key_id
+      AWS_SECRET_ACCESS_KEY:
+        from_secret: aws_secret_access_key
+    commands:
+      - aws --version
+      - aws s3 sync --delete ./site s3://tolentinof-drone-ci-tests
+    when:
+      branch:
+        - master
+      event:
+        - push

@@ -1,0 +1,8 @@
+---
+site_name: Drone CI Tests
+site_description: Repository for testing Drone CI features.
+
+repo_name: tolentinof/drone-ci-tests
+repo_url: https://github.com/tolentinof/drone-ci-tests
+
+copyright: MIT License - Copyright &copy; 2019 Flaudísio Tolentino.
