@@ -9,3 +9,9 @@ steps:
     commands:
       - pre-commit --version
       - pre-commit run --all-files --verbose --color always
+
+  - name: Build site
+    image: flaudisio/mkdocs:1
+    commands:
+      - mkdocs --version
+      - mkdocs build --clean --strict
