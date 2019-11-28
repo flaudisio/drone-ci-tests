@@ -15,3 +15,12 @@ steps:
     commands:
       - mkdocs --version
       - mkdocs build --clean --strict
+
+  - name: Test site
+    image: alpine:3.10
+    commands:
+      - test -f ./site/404.html
+      - test -f ./site/index.html
+      - test -f ./site/favicon.ico
+      - test -f ./site/search/search_index.json
+      - grep -q 'Welcome to MkDocs' ./site/index.html
