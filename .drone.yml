@@ -23,3 +23,14 @@ steps:
       - test -f ./site/index.html
       - test -f ./site/search/search_index.json
       - grep -q 'Welcome to MkDocs' ./site/index.html
+
+  - name: Deploy site
+    image: flaudisio/awscli:1
+    environment:
+      AWS_ACCESS_KEY_ID:
+        from_secret: aws_access_key_id
+      AWS_SECRET_ACCESS_KEY:
+        from_secret: aws_secret_access_key
+    commands:
+      - aws --version
+      - aws s3 sync --delete ./site s3://tolentinof-drone-ci-tests
