@@ -34,3 +34,8 @@ steps:
     commands:
       - aws --version
       - aws s3 sync --delete ./site s3://tolentinof-drone-ci-tests
+    trigger:
+      branch:
+        - master
+      event:
+        - push
